@@ -3,6 +3,11 @@ const usersRouter = express.Router();
 const { Users } = require("../models");
 const bcrypt = require("bcrypt");
 const { sign } = require("jsonwebtoken");
+const { validateToken } = require("../middlewares/AuthMiddleware.js");
+
+usersRouter.get("/auth", validateToken, (req, res) => {
+  res.json({ data: req.user });
+});
 
 usersRouter.post("/register", async (req, res) => {
   const { username, password } = req.body;
@@ -38,7 +43,12 @@ usersRouter.post("/login", async (req, res) => {
           },
           "importantsecret"
         );
-        res.json({ message: "Successfully login", accessToken: accessToken });
+        res.json({
+          message: "Successfully login",
+          accessToken: accessToken,
+          id: user.id,
+          username: user.username,
+        });
       }
     });
   }

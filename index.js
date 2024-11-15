@@ -6,11 +6,13 @@ const db = require("./models");
 const articlesRouter = require("./routes/Articles.js");
 const commentsRouter = require("./routes/Comments.js");
 const usersRouter = require("./routes/Users.js");
+const likesRouter = require("./routes/Likes.js");
 
 app.use(cors());
 app.use(express.json());
 app.use("/articles", articlesRouter);
 app.use("/comments", commentsRouter);
+app.use("/likes", likesRouter);
 app.use("/auth", usersRouter);
 
 db.sequelize.sync().then(() => {

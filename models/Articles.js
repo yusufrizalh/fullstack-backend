@@ -13,9 +13,16 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
   });
-  //* association: 1 article can has many comments
+
   Articles.associate = (model) => {
+    //* association: 1 article can has many comments
     Articles.hasMany(model.Comments, {
+      onUpdate: "cascade",
+      onDelete: "cascade",
+    });
+
+    //* association 1 article can has many likes
+    Articles.hasMany(model.Likes, {
       onUpdate: "cascade",
       onDelete: "cascade",
     });

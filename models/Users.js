@@ -11,6 +11,12 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Users.associate = (model) => {
+    //* association 1 user can gives many likes
+    Users.hasMany(model.Likes, {
+      onUpdate: "cascade",
+      onDelete: "cascade",
+    });
+    //* association 1 user can has many articles
     Users.hasMany(model.Articles, {
       onUpdate: "cascade",
       onDelete: "cascade",

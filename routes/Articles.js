@@ -17,7 +17,7 @@ articlesRouter.get("/", validateToken, async (req, res) => {
   });
 });
 
-articlesRouter.get("/byid/:id", async (req, res) => {
+articlesRouter.get("/byid/:id", validateToken, async (req, res) => {
   const id = req.params.id;
   const article = await Articles.findOne({
     include: [Likes],
@@ -31,8 +31,9 @@ articlesRouter.get("/byid/:id", async (req, res) => {
   });
 });
 
-articlesRouter.post("/", async (req, res) => {
+articlesRouter.post("/", validateToken, async (req, res) => {
   const newArticle = req.body;
+  newArticle.username = req.user.username;
   await Articles.create(newArticle); //* INSERT INTO articles VALUES()
   res.json({ message: "Successfully created article", data: newArticle });
 });
